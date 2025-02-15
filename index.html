@@ -3,763 +3,646 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autóalkatrész kereső</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <title>Hayes Auto Repair & Body Shop</title>
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            overflow: auto;
-        }
-
         body {
-            font-family: 'Roboto', sans-serif;
-            background-image: url('https://i.postimg.cc/FFVhX5bR/image.png');
-            background-repeat: no-repeat;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://i.postimg.cc/Z5XC9snM/image.png');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style: none;
             display: flex;
             justify-content: center;
+            padding: 0;
+            margin: 0;
+            flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            animation: fadeIn 1.5s ease-in-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        nav ul li {
+            margin: 10px 0;
         }
 
-        .container {
-            width: 100%;
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            color: #61a1ee;
+            transition: color 0.3s ease-in-out;
+        }
+
+        nav ul li a.active {
+            color: #61a1ee;
+        }
+
+        @media (min-width: 768px) {
+            nav ul {
+                flex-direction: row;
+            }
+
+            nav ul li {
+                margin: 0 15px;
+            }
+        }
+
+        main {
+            flex: 1;
+            width: 90%;
             max-width: 1200px;
+            text-align: center;
             padding: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 15px;
-            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
-            animation: slideUp 1s ease-in-out;
-            margin: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            margin-top: 20px;
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 10px;
+            animation: fadeIn 1s ease-in-out;
         }
 
         h1 {
-            text-align: center;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
+            font-size: 2rem;
             margin-bottom: 20px;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            animation: slideIn 1s ease-in-out;
         }
 
-        .search-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .search-container input {
-            width: 100%;
-            max-width: 600px;
-            border-radius: 25px;
-            padding: 15px;
-            border: none;
-            outline: none;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            font-size: 1.1rem;
-            background: linear-gradient(90deg, rgba(207, 54, 159, 0.7), rgba(98, 160, 237, 0.7));
-            color: white;
-            text-align: center;
-        }
-
-        .search-container input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .search-container input:focus {
-            box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.5);
-            transform: scale(1.05);
-        }
-
-        #results {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .car-item {
-            margin-bottom: 20px;
-            width: 100%;
-            max-width: 800px;
-            transition: all 0.3s ease;
-            animation: fadeInUp 0.5s ease-in-out;
-        }
-
-        @keyframes fadeInUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .car-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .card {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .card .card-body {
-            padding: 25px;
-        }
-
-        .list-group-item {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(90deg, rgba(207, 54, 159, 0.7), rgba(98, 160, 237, 0.7));
-        }
-
-        .list-group-item.selected {
-            background-color: rgba(0, 255, 0, 0.5);
-            transform: scale(1.05);
-        }
-
-        .list-group-item:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: translateX(10px);
-        }
-
-        .card-title {
+        h2 {
             font-size: 1.5rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+            color: #61a1ee;
         }
 
-        .header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .header .logo {
-            width: 120px;
-            height: auto;
-            margin-bottom: 15px;
-        }
-
-        .header .info {
-            text-align: center;
-            font-size: 1.2rem;
-            margin-top: 5px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-        }
-
-        .info-button, .car-care-button, .radio-button, .guide-button {
-            position: absolute;
-            top: 20px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        p {
             font-size: 1rem;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            line-height: 1.6;
+            animation: fadeIn 1.5s ease-in-out;
         }
 
-        .info-button {
-            right: 20px;
+        .service-list, .job-list {
+            text-align: left;
+            display: inline-block;
+            margin: 20px 0;
+            animation: fadeIn 2s ease-in-out;
         }
 
-        .car-care-button {
-            top: 70px;
-            right: 20px;
+        .service-list li, .job-list li {
+            margin: 10px 0;
         }
 
-        .radio-button {
-            left: 20px;
+        .strikethrough {
+            text-decoration: line-through;
         }
 
-        .guide-button {
-            top: 120px;
-            right: 20px;
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
         }
 
-        .info-button:hover, .car-care-button:hover, .radio-button:hover, .guide-button:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
+        /* Modal stílusok */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
         }
 
         .modal-content {
-            background-color: rgba(0, 0, 0, 0.8);
+            background: linear-gradient(135deg, #cf339e, #61a1ee);
+            opacity: 0.5;
+            padding: 10px;
+            border-radius: 10px;
             color: white;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .modal-header {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            justify-content: center;
-        }
-
-        .modal-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-        }
-
-        .total-price {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            font-weight: bold;
             text-align: center;
+            width: 95%;
+            max-width: 400px;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
         }
 
-        .audio-controls {
+        .modal.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .modal-content input,
+        .modal-content textarea,
+        .modal-content select {
+            padding: 10px;
+            margin: 10px 0;
+            width: 90%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            color: black;
+            font-size: 16px;
+            appearance: none; /* Eltávolítja a nyilat */
+        }
+
+        .modal-content textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .modal-content button {
+            padding: 10px 20px;
+            background: #61a1ee;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .modal-content button:hover {
+            background: #4a8cd6;
+        }
+
+        @media (min-width: 768px) {
+            .modal-content {
+                padding: 20px;
+            }
+        }
+
+        /* Hívj szerelőt gomb */
+        .call-button {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background: #cf339e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            animation: bounce 2s infinite;
+        }
+
+        .call-button:hover {
+            background: #b12a8a;
+        }
+
+        @media (min-width: 768px) {
+            .call-button {
+                font-size: 18px;
+                padding: 15px 30px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        /* Jelentkezés gomb középre igazítása */
+        .apply-container {
             display: flex;
             justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .audio-controls button {
-            margin: 0 5px;
-        }
-
-        .volume-control {
-            display: flex;
-            align-items: center;
-            margin-left: 10px;
-        }
-
-        .volume-control input[type="range"] {
-            width: 100px;
-            margin-left: 5px;
-        }
-
-        .radio-item.selected {
-            background-color: rgba(0, 255, 0, 0.5);
-            transform: scale(1.05);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .search-container input {
-                font-size: 1rem;
-            }
-
-            .card-title {
-                font-size: 1.2rem;
-            }
-
-            .list-group-item {
-                font-size: 0.9rem;
-            }
-
-            .info-button, .car-care-button, .radio-button, .guide-button {
-                padding: 8px 16px;
-                font-size: 0.9rem;
-            }
-
-            .header .logo {
-                width: 80px;
-            }
-
-            .header .info {
-                font-size: 1rem;
-            }
-        }
-
-        /* Kisokos stílusok */
-        .guide-content {
-            padding: 20px;
-        }
-
-        .guide-content h2 {
-            font-size: 1.4rem; /* Kisebb címek */
             margin-top: 20px;
-            margin-bottom: 10px;
-            font-weight: 700;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-            text-align: center; /* Címek középre igazítása */
         }
 
-        .guide-content ul {
-            padding-left: 20px;
-            list-style-type: disc; /* Pontok a lépéseknél */
-        }
-
-        .guide-content ul li {
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-
-        .toc {
-            margin-bottom: 20px;
-        }
-
-        .toc h1 {
-            text-align: center; /* Tartalomjegyzék főcíme középre igazítva */
-        }
-
-        .toc ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        .toc ul li {
-            margin-bottom: 10px;
-        }
-
-        .toc ul li a {
+        .apply-button {
+            padding: 10px 20px;
+            background: #61a1ee;
             color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            animation: fadeIn 2s ease-in-out;
         }
 
-        .toc ul li a:hover {
-            color: #ffcc00;
-            text-decoration: underline;
+        .apply-button:hover {
+            background: #4a8cd6;
+        }
+
+        @media (min-width: 768px) {
+            .apply-button {
+                font-size: 18px;
+                padding: 15px 30px;
+            }
+        }
+
+        /* Animációk */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <button class="info-button" data-toggle="modal" data-target="#infoModal"><i class="fas fa-info-circle"></i> Információk</button>
-        <button class="car-care-button" data-toggle="modal" data-target="#carCareModal"><i class="fas fa-car"></i> Autókozmetika & Vontatás</button>
-        <button class="radio-button" data-toggle="modal" data-target="#radioModal"><i class="fas fa-music"></i> Rádió</button>
-        <button class="guide-button" data-toggle="modal" data-target="#guideModal"><i class="fas fa-wrench"></i> Kisokos</button>
-        <div class="header">
-            <img src="https://i.postimg.cc/D0tYWgnQ/Hayes-Auto-Body-Shop-GTAV-Logo.png" alt="Logo" class="logo">
-            <h1>Alkatrész kereső</h1>
-            <div class="info">
-                <p>Találd meg a járműhöz szükséges alkatrész árát könnyedén!</p>
-            </div>
-        </div>
-        <div class="search-container">
-            <input type="text" id="search" class="form-control" placeholder="Írd be az autó nevét...">
-        </div>
-        <div id="results"></div>
-    </div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home" data-target="home">Kezdőlap</a></li>
+                <li><a href="#services" data-target="services">Szolgáltatások</a></li>
+                <li><a href="#careers" data-target="careers">Álláslehetőségek</a></li>
+                <li><a href="#contact" data-target="contact">Kapcsolat</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <!-- Információs modális ablak -->
-    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="infoModalLabel">Információk</h5>
-                </div>
-                <div class="modal-body">
-                    <p>Az oldal reszponzív, vagyis mobiltelefonról és tabletről is könnyedén elérhető. Ha kisebb kijelzőn használod, az alkatrészek listája és a keresőmező automatikusan igazodik a képernyő méretéhez.</p>
+    <main>
+        <!-- Kezdőlap -->
+        <section id="home" class="active">
+            <h1>Üdvözöljük a Hayes Auto Repair & Body Shop-nál!</h1>
+            <p>Autója megbízható kezekben van! Cégünk több mint 20 éve nyújt kiváló minőségű autószerviz és karosszéria javítási szolgáltatásokat. Legyen szó kisebb javításról vagy komolyabb baleseti helyreállításról, nálunk mindent megoldunk!</p>
+            <img src="https://i.postimg.cc/1tYvqNnB/11zon-resized.png" alt="Autószerviz műhely">
+        </section>
+
+        <!-- Szolgáltatások -->
+        <section id="services" class="hidden">
+            <!-- Autókozmetika -->
+            <h2>Autókozmetika</h2>
+            <p>Autókozmetika, ahogy az a nagykönyvben meg van írva:</p>
+            <p>Az automata mosók akár súlyos anyagi károkat is okozhatnak, de a mikrokarcok elkönyvelhetők lesznek, ha begurulunk az autóval. A kézi mosók még csak-csak, de legjobb, ha profikra bízzuk, abból baj nem lehet.</p>
+            <p>Azok számára, akik járművükre nem csupán használati tárgyként, egy eszközként tekintenek, akiknek az autó egy társ, aki törődést igényel. Számotokra tudunk szolgálni:</p>
+            <ul class="service-list">
+                <li> <strong>Külső tisztítás</strong>         
                     <ul>
-                        <li>Az oldalon található keresőmezőbe írd be a keresett jármű nevét vagy típusát.</li>
-                        <li>Nyomj egy Entert, hogy megnézd az adott jármű alkatrész árait.</li>
-                        <li>Bal klikkel válaszd ki a szükséges alkatrészeket.</li>
-                        <li>A fizetendő összeg automatikusan kiszámolásra kerül, ami az alkatrészek alatt látható.</li>
-                        <li>Az oldal bal felső sarkában található egy rádió fül, ahol munka közben hallgathatod a kedvenc rádióadód.</li>
-                        <li>Crawford a legnagyobb Király!</li>
+                        <li>- legjobb minőségű, saját gyártmányú autómosó sampon felvitele</li>
+                        <li>- szennyeződések eltávolítása mosószivacs segítségével</li>
+                        <li>- leöblítés vízzel</li>
                     </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Bezárás</button>
-                </div>
+                </li>
+                <li> <strong>Belső tisztítás</strong>         
+                    <ul>
+                        <li>- autó belterének alapos kitakarítása, porszívózás</li>
+                        <li>- beltérben előforduló anyagokra specializált tisztítószerek használata</li>
+                        <li>- ezen anyagokra védőbevonatok felvitele, a nagyobb védelem érdekében</li>
+                    </ul>
+                </li>
+                <li> <strong>Polír</strong>                   
+                    <ul>
+                        <li>- feltétele a külső tisztítás elvégzése</li>
+                        <li>- választható: egy- vagy többlépcsős polírozás (karcok mélységétől függ; nagyon mély karc esetén sajnos csak fényezéssel javítható az elem)</li>
+                        <li>- az eredmény önmagáért beszél, de hogy a tartósságot növeljük, érdemes befejezéshez kérni:</li>
+                    </ul>
+                </li>
+                <li> <strong>Wax</strong>                     
+                    <ul>
+                        <li>- feltétele a(z) egy- vagy többlépcsős polírozás elvégzése</li>
+                        <li>- saját márkás, magas kerámia tartalmú kemény wax felvitele telepítőkoronggal</li>
+                        <li>- vízlepergető hatás; ellenállóbb a szennyeződésekkel szemben</li>
+                        <li>- a kerámia bevonat védi a kőfelverődésektől a fényezést</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Teljeskörű szervizelés -->
+            <h2>Teljeskörű szervizelés</h2>
+            <p>Az autód nem csupán egy gép – egy társ, aki mindig készen áll, hogy elvigyen bárhová. De ahhoz, hogy megbízható maradjon, időnként neki is szüksége van egy kis gondoskodásra. Legyen szó egy apróbb hibáról vagy egy komolyabb problémáról, mi azért vagyunk, hogy a lehető legjobb állapotba hozzuk a járművedet.</p>
+            <ul class="service-list">
+                <li> <strong>Motorhibák diagnosztizálása és javítása</strong>
+                    <ul>
+                        <li>- Modern diagnosztikai eszközökkel felderítjük a hibákat</li>
+                        <li>- Motorvezérlő rendszerek ellenőrzése és javítása</li>
+                        <li>- Teljeskörű mechanikai és elektronikai hibaelhárítás</li>
+                    </ul>
+                </li>
+                <li> <strong>Karosszéria javítás és festés</strong>
+                    <ul>
+                        <li>- Horpadások, karcolások és rozsdásodás kezelése</li>
+                        <li>- Gyári színazonos fényezés precíz festési technológiával</li>
+                        <li>- Baleseti sérülések teljes helyreállítása</li>
+                    </ul>
+                </li>
+                <li> <strong>Fékrendszer ellenőrzés és javítás</strong>
+                    <ul>
+                        <li>- Féktárcsák, fékbetétek és fékfolyadék állapotfelmérése</li>
+                        <li>- Kopott vagy sérült alkatrészek cseréje</li>
+                        <li>- Teljeskörű fékrendszer beállítás a maximális biztonságért</li>
+                    </ul>
+                </li>
+                <li> <strong>Futómű beállítás és javítás</strong>
+                    <ul>
+                        <li>- Lengéscsillapítók, gömbfejek, szilentek és kormányösszekötők ellenőrzése</li>
+                        <li>- Kerékösszetartás és futómű geometriájának pontos beállítása</li>
+                        <li>- Stabilabb úttartás, egyenletesebb gumikopás</li>
+                    </ul>
+                </li>
+                <li> <strong>Klímaszerviz és légkondicionáló rendszer javítás</strong>
+                    <ul>
+                        <li>- Klímagáz töltés és szivárgásvizsgálat</li>
+                        <li>- Pollenszűrő és klímahűtő ellenőrzése, fertőtlenítése</li>
+                        <li>- Légkondicionáló kompresszor és egyéb alkatrészek javítása</li>
+                    </ul>
+                </li>
+                <li> <strong>Baleseti helyreállítás</strong>
+                    <ul>
+                        <li>- Karosszéria és vázszerkezet javítása gyári technológiával</li>
+                        <li>- Műszaki és elektronikai rendszerek teljes körű helyreállítása</li>
+                        <li>- Sérült alkatrészek cseréje és precíz illesztése az eredeti állapot visszaállításához</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <img src="https://source.unsplash.com/800x400/?car,repair" alt="Szolgáltatások kép">
+        </section>
+
+        <!-- Álláslehetőségek -->
+        <section id="careers" class="hidden">
+            <h1>Álláslehetőségek</h1>
+            <p>Ha szeretne csatlakozni csapatunkhoz, nézze meg nyitott pozícióinkat! Folyamatosan keresünk lelkes és szakmailag felkészült munkatársakat.</p>
+            <ul class="job-list">
+                <li>🚗 Autószerelő (tapasztalat szükséges)</li>
+                <li>🧽 Autókozmetikus (kezdők is jelentkezhetnek)</li>
+                <li>‍💄 Takarítónő (18-25 év közötti, szőke, hosszú, selymes hajú, karcsú nő)</li>
+                <li>❓ Lehet nem is kell</li>
+            </ul>
+            <div class="apply-container">
+                <button class="apply-button" onclick="openApplyModal()">Jelentkezem</button>
             </div>
+            <img src="https://i.postimg.cc/bv7TyR1x/image-11zon.png" alt="Álláslehetőségek kép">
+        </section>
+
+        <!-- Kapcsolat -->
+        <section id="contact" class="hidden">
+            <h1>Kapcsolat</h1>
+            <p>Keressen minket bátran, csapatunk mindig szívesen áll rendelkezésére!</p>
+            <p><strong>Cím:</strong> 1234 Autószerviz utca, Los Santos</p>
+            <p><strong>Telefon:</strong> 30/459-3506</p>
+            <p><strong>E-mail:</strong> info@hayesautorepair.com</p>
+            <p><strong>Nyitvatartás:</strong> Hétfő-Péntek: Talán, Szombat: Noo</p>
+            <img src="https://i.postimg.cc/brt9SVjY/N-vtelen-terv-1.png" alt="Kapcsolat kép">
+        </section>
+    </main>
+
+    <!-- Hívj szerelőt gomb -->
+    <button class="call-button" onclick="openModal()">Hívj szerelőt!</button>
+
+    <!-- Modal ablak (Hívj szerelőt) -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2>Adja meg az adatait</h2>
+            <input type="text" id="name" placeholder="Név" required>
+            <input type="text" id="phone" placeholder="Telefonszám" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <input type="text" id="zipCode" placeholder="Irányítószám" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <textarea id="description" placeholder="Rövid leírás a problémáról" required></textarea>
+            <button onclick="sendRequest()">Küldés</button>
+            <button onclick="closeModal()" style="background: #ccc; color: black;">Mégse</button>
         </div>
     </div>
 
-    <!-- Autókozmetika és Vontatás modális ablak -->
-    <div class="modal fade" id="carCareModal" tabindex="-1" aria-labelledby="carCareModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="carCareModalLabel">Autókozmetika & Vontatás Árak</h5>
-                </div>
-                <div class="modal-body">
-                    <h6>Autókozmetika</h6>
-                    <ul class="list-group">
-                        <li class="list-group-item">Külső tisztítás: $300</li>
-                        <li class="list-group-item">Belső tisztítás: $200</li>
-                        <li class="list-group-item">Polír: $300</li>
-                        <li class="list-group-item">Wax: $200</li>
-                    </ul>
-                    <h6 class="mt-3">Vontatás</h6>
-                    <ul class="list-group">
-                        <li class="list-group-item">Városon belül: $800</li>
-                        <li class="list-group-item">Városon kívül: $1400</li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Bezárás</button>
-                </div>
-            </div>
+    <!-- Modal ablak (Jelentkezés) -->
+    <div id="applyModal" class="modal">
+        <div class="modal-content">
+            <h2>Jelentkezés</h2>
+            <input type="text" id="applyName" placeholder="Név" required>
+            <input type="text" id="applyBirthDate" placeholder="Születési dátum (ÉÉÉÉ-HH-NN)" required pattern="\d{4}-\d{2}-\d{2}" title="Kérjük, adja meg a dátumot ÉÉÉÉ-HH-NN formátumban!">
+            <input type="text" id="applyPhone" placeholder="Telefonszám" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <input type="email" id="applyEmail" placeholder="Email cím ((Discord Felhasználónév))" required>
+            <input type="text" id="applyAddress" placeholder="Lakhely" required>
+            <select id="applyQualification" required>
+                <option value="" disabled selected>Van-e szakirányú végzettsége?</option>
+                <option value="igen">Igen</option>
+                <option value="nem">Nem</option>
+            </select>
+            <select id="applyPreviousWork" required>
+                <option value="" disabled selected>Dolgozott már autószerelő műhelyben?</option>
+                <option value="igen">Igen</option>
+                <option value="nem">Nem</option>
+            </select>
+            <select id="applyLicense" required>
+                <option value="" disabled selected>Van-e érvényes jogosítványa?</option>
+                <option value="igen">Igen</option>
+                <option value="nem">Nem</option>
+            </select>
+            <select id="applyImmediateStart" required>
+                <option value="" disabled selected>Azonnal tudna kezdeni?</option>
+                <option value="igen">Igen</option>
+                <option value="nem">Nem</option>
+            </select>
+            <textarea id="applyAdditionalInfo" placeholder="Miért szeretne ebben a műhelyben dolgozni? (Maximum 1000 karakter)" maxlength="1000"></textarea>
+            <button onclick="sendApplication()">Küldés</button>
+            <button onclick="closeApplyModal()" style="background: #ccc; color: black;">Mégse</button>
         </div>
     </div>
-
-    <!-- Rádió modális ablak -->
-    <div class="modal fade" id="radioModal" tabindex="-1" aria-labelledby="radioModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="radioModalLabel">Rádiók</h5>
-                </div>
-                <div class="modal-body">
-                    <ul id="radioList" class="list-group">
-                        <!-- Rádiók listája ide kerül -->
-                    </ul>
-                    <div class="audio-controls">
-                        <button id="playButton" class="btn btn-secondary"><i class="fas fa-play"></i></button>
-                        <button id="stopButton" class="btn btn-secondary"><i class="fas fa-stop"></i></button>
-                        <div class="volume-control">
-                            <i class="fas fa-volume-up"></i>
-                            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Bezárás</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Kisokos modális ablak -->
-    <div class="modal fade" id="guideModal" tabindex="-1" aria-labelledby="guideModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="guideModalLabel">Kisokos - Szerelési Folyamatok</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="toc">
-                        <h1>Tartalomjegyzék</h1>
-                        <ul>
-                            <li><a href="#elso-szelvedo-csere">Első szélvédő csere</a></li>
-                            <li><a href="#fenszoro-csere">Fényszóró Csere Menete</a></li>
-                            <li><a href="#motorhazteto-csere">Motorháztető Csere Menete</a></li>
-                            <li><a href="#ajto-csere">Ajtó Csere Menete</a></li>
-                            <li><a href="#teszt-csere">Teszt Csere Menete</a></li>
-                        </ul>
-                    </div>
-                    <div class="guide-content">
-                        <h2 id="elso-szelvedo-csere">Első szélvédő csere</h2>
-                        <ul>
-                            <li>Szedd le az első szélvédő belső burkolatát (pl. műanyag paneleket, tükröket). Ez általában csavarokkal vagy reteszekkel van rögzítve.</li>
-                            <li>Használj ragasztóeltávolító eszközt (pl. vágóhuzalt vagy speciális kést), hogy levágd a régi ragasztót. Óvatosan dolgozz, hogy ne sértsd a karosszériát.</li>
-                            <li>Miután a ragasztó körbe van vágva, óvatosan emeld ki a régi szélvédőt.</li>
-                            <li>A karosszéria ragasztófelületét és az új szélvédő peremét alaposan tisztítsd meg izopropil-alkohollal vagy más megfelelő oldószerrel.</li>
-                            <li>Alkalmazz szélvédőragasztó primert (pl. Sika 207 Primer) a karosszériára és az új szélvédő peremére, hogy javítsd a ragasztó tapadását.</li>
-							<li>Alkalmazz szélvédő ragasztót a karosszéria peremére vagy az új szélvédőre (pl. Sika Tack Drive).</li>
-							<li>Óvatosan illeszd be az új szélvédőt a keretbe, vákuumos szélvédőfogó tappancs segítségével.</li>
-							<li>Távolítsd el a kiszivárgott ragasztót egy éles késsel vagy oldószerrel.</li>
-							<li>Szereld vissza a belső paneleket és egyéb elemeket.</li>
-							<li>Távolítsd el az ujjlenyomatokat vagy szennyeződéseket az új üvegről.</li>
-							<li>Végül javasold az ügyfélnek, hogy a következő 24 órában lehetőleg kerülje az egyenetlen utakat, és óvatosan csukja be az autó ajtaját.</li>
-                        </ul>
-
-                        <h2 id="fenszoro-csere">Fényszóró Csere Menete</h2>
-                        <ul>
-                            <li>Felkészülés: Szerezzen be egy új fényszóró egységet.</li>
-                            <li>Régi fényszóró eltávolítása: Távolítsa el a rögzítő csavarokat, és válassza le az elektromos csatlakozókat.</li>
-                            <li>Új fényszóró beépítése: Csatlakoztassa az új fényszórót, és rögzítse a helyére.</li>
-                            <li>Utómunkálatok: Ellenőrizze a fényszóró működését, és állítsa be a szintjét.</li>
-                        </ul>
-
-                        <h2 id="motorhazteto-csere">Motorháztető Csere Menete</h2>
-                        <ul>
-                            <li>Felkészülés: Szerezzen be egy új motorháztetőt.</li>
-                            <li>Régi motorháztető eltávolítása: Távolítsa el a rögzítő csavarokat vagy sarkantyúkat.</li>
-                            <li>Új motorháztető beépítése: Helyezze az új motorháztetőt a helyére, és rögzítse.</li>
-                            <li>Utómunkálatok: Ellenőrizze a motorháztető zárását és nyitását.</li>
-                        </ul>
-
-                        <h2 id="ajto-csere">Ajtó Csere Menete</h2>
-                        <ul>
-                            <li>Felkészülés: Szerezzen be egy új ajtót.</li>
-                            <li>Régi ajtó eltávolítása: Távolítsa el a belső paneleket, és válassza le az elektromos csatlakozókat.</li>
-                            <li>Új ajtó beépítése: Helyezze az új ajtót a helyére, és rögzítse.</li>
-                            <li>Utómunkálatok: Ellenőrizze az ajtó zárását és nyitását, majd szerelje vissza a belső paneleket.</li>
-                        </ul>
-
-                        <h2 id="teszt-csere">Teszt Csere Menete</h2>
-                        <ul>
-                            <li>Felkészülés: Szerezzen be egy új ajtót.</li>
-                            <li>Régi ajtó eltávolítása: Távolítsa el a belső paneleket, és válassza le az elektromos csatlakozókat.</li>
-                            <li>Új ajtó beépítése: Helyezze az új ajtót a helyére, és rögzítse.</li>
-                            <li>Utómunkálatok: Ellenőrizze az ajtó zárását és nyitását, majd szerelje vissza a belső paneleket.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Bezárás</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        // Example cars data
-        const exampleCars = {
-            car1: {
-                name: "Faggio Sport",
-                parts: {
-                    alapdíj: 500,
-                    lámpa: 350,
-                    ablak: 0,
-                    lökhárító: 0,
-                    ajtó: 0,
-                    kerék: 400,
-                    motorháztető: 0,
-                    csomagtartó: 0,
-                    karosszéria: 0,
-                    motorhiba: 550,
-                    totálkár: 1500
-                }
-            },
-            car2: {
-                name: "Faggio",
-                parts: {
-                    alapdíj: 500,
-                    lámpa: 350,
-                    ablak: 0,
-                    lökhárító: 0,
-                    ajtó: 0,
-                    kerék: 400,
-                    motorháztető: 0,
-                    csomagtartó: 0,
-                    karosszéria: 0,
-                    motorhiba: 550,
-                    totálkár: 1500
-                }
-            },
-            car3: {
-                name: "Voodoo",
-                parts: {
-                    alapdíj: 500,
-                    lámpa: 300,
-                    ablak: 350,
-                    lökhárító: 400,
-                    ajtó: 450,
-                    kerék: 450,
-                    motorháztető: 500,
-                    csomagtartó: 500,
-                    karosszéria: 500,
-                    motorhiba: 500,
-                    totálkár: 2000
-                }
-            },
-            car4: {
-                name: "Regina",
-                parts: {
-                    alapdíj: 500,
-                    lámpa: 300,
-                    ablak: 350,
-                    lökhárító: 400,
-                    ajtó: 450,
-                    kerék: 450,
-                    motorháztető: 500,
-                    csomagtartó: 500,
-                    karosszéria: 500,
-                    motorhiba: 500,
-                    totálkár: 2000
-                }
-            },
-            car5: {
-                name: "Brioso 300",
-                parts: {
-                    alapdíj: 500,
-                    lámpa: 300,
-                    ablak: 350,
-                    lökhárító: 400,
-                    ajtó: 450,
-                    kerék: 450,
-                    motorháztető: 500,
-                    csomagtartó: 500,
-                    karosszéria: 500,
-                    motorhiba: 500,
-                    totálkár: 2000
-                }
-            }
-        };
+        // Modal kezelése (Hívj szerelőt)
+        const modal = document.getElementById("modal");
 
-        function displayResults(results) {
-            const resultsContainer = document.getElementById('results');
-            resultsContainer.innerHTML = '';
+        function openModal() {
+            modal.classList.add("active");
+        }
 
-            if (results.length === 0) {
-                resultsContainer.innerHTML = '<p class="text-center">Nincs találat!</p>';
+        function closeModal() {
+            modal.classList.remove("active");
+        }
+
+        // Modal kezelése (Jelentkezés)
+        const applyModal = document.getElementById("applyModal");
+
+        function openApplyModal() {
+            applyModal.classList.add("active");
+        }
+
+        function closeApplyModal() {
+            applyModal.classList.remove("active");
+        }
+
+        // Adatok küldése Discord webhook segítségével (Hívj szerelőt)
+        async function sendRequest() {
+            const name = document.getElementById("name").value;
+            const phone = document.getElementById("phone").value;
+            const zipCode = document.getElementById("zipCode").value;
+            const description = document.getElementById("description").value;
+
+            if (!name || !phone || !zipCode || !description) {
+                alert("Kérjük, töltse ki az összes mezőt!");
                 return;
             }
 
-            results.forEach(car => {
-                const carElement = document.createElement('div');
-                carElement.classList.add('car-item', 'card', 'mb-3');
+            const webhookURL = "https://discord.com/api/webhooks/1337867597357514913/jj0O2mz28Uvas1iFP0zaRGZk-VlvrLxk2-Cwaz43cQcqK5tq4AoEF6M1sO4ECpUcOZXL"; // Cseréld ki a saját Discord webhook URL-edre
+            const message = {
+                username: "Diszpécser", // A webhook neve
+                content: `@everyone\n**Új hívás érkezett!**\n\n**Név:** ${name}\n**Telefonszám:** ${phone}\n**Irányítószám:** ${zipCode}\n**Leírás:** ${description}\n\nHa szeretnéd elfogadni a hívást, reagálj erre az értesítésre, majd vedd fel a kapcsolatot az ügyféllel.`,
+            };
 
-                const carBody = document.createElement('div');
-                carBody.classList.add('card-body');
-
-                const carName = document.createElement('h5');
-                carName.classList.add('card-title');
-                carName.textContent = car.name;
-                carBody.appendChild(carName);
-
-                const partsList = document.createElement('ul');
-                partsList.classList.add('list-group', 'list-group-flush');
-                for (const part in car.parts) {
-                    const partItem = document.createElement('li');
-                    partItem.classList.add('list-group-item');
-                    partItem.textContent = part + ': $' + car.parts[part];
-                    partItem.dataset.price = car.parts[part];
-                    partItem.addEventListener('click', () => {
-                        partItem.classList.toggle('selected');
-                        updateTotalPrice(carElement);
-                    });
-                    partsList.appendChild(partItem);
-                }
-                carBody.appendChild(partsList);
-
-                const totalPrice = document.createElement('div');
-                totalPrice.classList.add('total-price');
-                totalPrice.textContent = 'Fizetendő összeg: $0';
-                carBody.appendChild(totalPrice);
-
-                carElement.appendChild(carBody);
-                resultsContainer.appendChild(carElement);
-            });
-        }
-
-        function updateTotalPrice(carElement) {
-            const selectedParts = carElement.querySelectorAll('.list-group-item.selected');
-            let total = 0;
-            selectedParts.forEach(part => {
-                total += parseFloat(part.dataset.price);
-            });
-            const totalPriceElement = carElement.querySelector('.total-price');
-            totalPriceElement.textContent = `Fizetendő összeg: $${total}`;
-        }
-
-        document.getElementById('search').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                const query = this.value.toLowerCase().replace(/\s+/g, '');
-                if (query.trim() === '') {
-                    document.getElementById('results').innerHTML = '';
-                    return;
-                }
-                const results = Object.values(exampleCars).filter(car => car.name.toLowerCase().replace(/\s+/g, '') === query);
-                displayResults(results);
-            }
-        });
-
-        // Rádiók listája
-        const radios = [
-            { name: "Rádió 1 - Csak igazi mai sláger megy", url: "https://icast.connectmedia.hu/5201/live.mp3" },
-            { name: "Petőfi Rádió - Magyar Rádió", url: "https://icast.connectmedia.hu/4738/mr2.mp3" },
-            { name: "Rádió M - Miskolc", url: "http://hosting2.42netmedia.com:10060/stream" },
-            { name: "Kossuth Rádió - Magyar Rádió", url: "https://icast.connectmedia.hu/4736/mr1.mp3" },
-            { name: "Retro Rádió - Minden idők legnagyobb slágerei", url: "https://icast.connectmedia.hu/5001/live.mp3" },
-            { name: "#6", url: "#" },
-            { name: "#7", url: "#" },
-            { name: "#8", url: "#" },
-            { name: "#9", url: "#" },
-            { name: "#10", url: "#" },
-            { name: "#11", url: "#" },
-            { name: "#12", url: "#" },
-            { name: "#13", url: "#" },
-            { name: "#14", url: "#" },
-            { name: "#15", url: "#" }
-        ];
-
-        const radioList = document.getElementById('radioList');
-        const audio = new Audio();
-        let currentRadio = null;
-
-        radios.forEach(radio => {
-            const radioItem = document.createElement('li');
-            radioItem.classList.add('list-group-item', 'radio-item');
-            radioItem.textContent = radio.name;
-            radioItem.addEventListener('click', () => {
-                // Eltávolítjuk a kijelölést az összes rádió elemről
-                document.querySelectorAll('.radio-item').forEach(item => {
-                    item.classList.remove('selected');
+            try {
+                const response = await fetch(webhookURL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(message),
                 });
-                // Kijelöljük az aktuális rádiót
-                radioItem.classList.add('selected');
-                currentRadio = radio.url;
-                audio.src = currentRadio;
-                audio.play();
-                document.getElementById('playButton').innerHTML = '<i class="fas fa-pause"></i>';
-            });
-            radioList.appendChild(radioItem);
-        });
 
-        document.getElementById('playButton').addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play();
-                document.getElementById('playButton').innerHTML = '<i class="fas fa-pause"></i>';
-            } else {
-                audio.pause();
-                document.getElementById('playButton').innerHTML = '<i class="fas fa-play"></i>';
+                if (response.ok) {
+                    alert("Kérés elküldve! Hamarosan felvesszük Önnel a kapcsolatot.");
+                    closeModal();
+                } else {
+                    alert("Hiba történt a kérés küldése közben. Kérjük, próbálja újra később.");
+                }
+            } catch (error) {
+                console.error("Hiba:", error);
+                alert("Hiba történt a kérés küldése közben.");
             }
-        });
+        }
 
-        document.getElementById('stopButton').addEventListener('click', () => {
-            audio.pause();
-            audio.currentTime = 0;
-            document.getElementById('playButton').innerHTML = '<i class="fas fa-play"></i>';
-        });
+        // Adatok küldése Discord webhook segítségével (Jelentkezés)
+        async function sendApplication() {
+            const name = document.getElementById("applyName").value;
+            const birthDate = document.getElementById("applyBirthDate").value;
+            const phone = document.getElementById("applyPhone").value;
+            const email = document.getElementById("applyEmail").value;
+            const address = document.getElementById("applyAddress").value;
+            const qualification = document.getElementById("applyQualification").value;
+            const previousWork = document.getElementById("applyPreviousWork").value;
+            const license = document.getElementById("applyLicense").value;
+            const immediateStart = document.getElementById("applyImmediateStart").value;
+            const additionalInfo = document.getElementById("applyAdditionalInfo").value;
 
-        document.getElementById('volumeSlider').addEventListener('input', (e) => {
-            audio.volume = e.target.value;
+            if (!name || !birthDate || !phone || !email || !address || !qualification || !previousWork || !license || !immediateStart) {
+                alert("Kérjük, töltse ki az összes kötelező mezőt!");
+                return;
+            }
+
+            const webhookURL = "https://discord.com/api/webhooks/1337861320556679228/WQZqpy9G8GOD6X4gbqG3agPmZel4tEQGVKLxBg-ebTuhMY4APfXS9TtsjHCIV4nXxp-E"; // Cseréld ki a saját Discord webhook URL-edre
+            const message = {
+                username: "Titkárnő", // A webhook neve
+                content: `@everyone\n**Új jelentkezés érkezett!**\n\n**Név:** ${name}\n**Születési dátum:** ${birthDate}\n**Telefonszám:** ${phone}\n**Email cím ((Discord felhasználónév)):** ${email}\n**Lakhely:** ${address}\n**Szakirányú végzettség:** ${qualification}\n**Dolgozott-e már műhelyben/szervizben:** ${previousWork}\n**Jogosítvány:** ${license}\n**Azonnali kezdés:** ${immediateStart}\n**Egyéb információ:** ${additionalInfo}`,
+            };
+
+            try {
+                const response = await fetch(webhookURL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(message),
+                });
+
+                if (response.ok) {
+                    alert("Jelentkezését megkaptuk! Hamarosan felvesszük önnel a kapcsolatot!");
+                    closeApplyModal();
+                } else {
+                    alert("Hiba történt a jelentkezés küldése közben. Kérjük, próbálja újra később.");
+                }
+            } catch (error) {
+                console.error("Hiba:", error);
+                alert("Hiba történt a jelentkezés küldése közben.");
+            }
+        }
+
+        // Szekciók váltása
+        document.addEventListener("DOMContentLoaded", function() {
+            const sections = document.querySelectorAll("section");
+            const navLinks = document.querySelectorAll("nav ul li a");
+
+            // Alapértelmezettként a kezdőlap megjelenítése
+            document.querySelector("#home").classList.add("active");
+            document.querySelector('a[data-target="home"]').classList.add("active");
+
+            navLinks.forEach(link => {
+                link.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    const targetId = this.getAttribute("data-target");
+
+                    // Minden szekció elrejtése
+                    sections.forEach(section => {
+                        section.classList.remove("active");
+                        section.classList.add("hidden");
+                    });
+
+                    // Minden fül eltávolítása az active osztályból
+                    navLinks.forEach(link => {
+                        link.classList.remove("active");
+                    });
+
+                    // A kiválasztott szekció megjelenítése
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        targetSection.classList.remove("hidden");
+                        targetSection.classList.add("active");
+                    }
+
+                    // A kiválasztott fül kék színűre állítása
+                    this.classList.add("active");
+                });
+            });
         });
     </script>
 </body>
