@@ -8,7 +8,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-image: url('https://i.postimg.cc/Z5XC9snM/image.png');
+            background-image: url('https://i.postimg.cc/4NnqD27N/Grand-Theft-Auto-V-Screenshot-2025-02-13-18-47-13-39.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -309,6 +309,37 @@
                 transform: translateY(-5px);
             }
         }
+
+        /* Álláslehetőségek stílusok */
+        .job-offers-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .job-offers-container div {
+            flex: 1;
+            margin: 10px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .job-offers-container h3 {
+            color: #61a1ee;
+            margin-bottom: 10px;
+        }
+
+        .job-offers-container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .job-offers-container ul li {
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -326,9 +357,14 @@
     <main>
         <!-- Kezdőlap -->
         <section id="home" class="active">
-            <h1>Üdvözöljük a Hayes Auto Repair & Body Shop-nál!</h1>
-            <p>Autója megbízható kezekben van! Cégünk több mint 20 éve nyújt kiváló minőségű autószerviz és karosszéria javítási szolgáltatásokat. Legyen szó kisebb javításról vagy komolyabb baleseti helyreállításról, nálunk mindent megoldunk!</p>
-            <img src="https://i.postimg.cc/1tYvqNnB/11zon-resized.png" alt="Autószerviz műhely">
+            <h1>Üdvözlünk a Hayes Auto Repair & Body Shop-nál!</h1>
+            <p>A Hayes Auto Repair & Body Shop története öt évvel ezelőtt kezdődött, amikor egy jó barátommal úgy döntöttünk, hogy megvalósítjuk közös álmunkat: egy saját autószerelő műhelyt nyitunk. Kezdetben egy kis családi vállalkozásként indultunk, bérelve egy mindössze egy beállós garázst, ahol autójavítással és karosszéria-munkákkal foglalkoztunk. A kezdeti időszak kihívásokkal teli volt, de elszántságunk és szakértelmünk hamar meghozta az eredményét.</p>
+			<p>Az évek során folyamatosan bővítettük tudásunkat, és a megszerzett tapasztalatok révén egyre több ügyfél bizalmát nyertük el. Minőségi munkánknak és ügyfélközpontú hozzáállásunknak köszönhetően a műhelyünk hírneve gyorsan terjedt, így egyre nagyobb igény mutatkozott szolgáltatásaink iránt.</p>
+			<p>A növekvő kereslet miatt vállalkozásunk fokozatosan fejlődött: új szerelők csatlakoztak a csapatunkhoz, bővült a műhely felszereltsége, és a korábbi egy beállós garázsból egy korszerű, három beállós, a legmodernebb eszközökkel felszerelt autójavító műhellyé vált. Idővel szolgáltatásaink bővültek autókozmetikával is, lehetőséget biztosítva ügyfeleink számára, hogy járműveik kívül-belül a legjobb állapotban maradjanak.</p>
+			<p>A folyamatos innováció és a technológiai fejlesztések iránti elkötelezettségünk lehetővé tette, hogy a Hayes Auto Repair & Body Shop mára a környék egyik legmegbízhatóbb és legelismertebb autószervize legyen.</p>
+			<p>Mindig is az volt a célunk, hogy ügyfeleink számára a lehető legjobb szolgáltatást nyújtsuk, legyen szó kisebb javításokról, nagyobb karosszériamunkákról vagy teljes körű autószervizről. A múltbeli kihívások és sikerek formálták cégünket olyanná, amilyen ma: egy megbízható, magas színvonalú és ügyfélközpontú műhellyé, amelyre minden autótulajdonos számíthat.</p>
+			<p>A jövőre nézve továbbra is elkötelezettek vagyunk a folyamatos fejlődés, a minőségi szolgáltatás és az innováció mellett, hogy még hosszú éveken át szolgálhassuk ügyfeleinket.</p>
+            <img src="https://i.postimg.cc/Z5GGFPqY/N-vtelen-3.jpg" alt="Autószerviz műhely">
         </section>
 
         <!-- Szolgáltatások -->
@@ -337,7 +373,7 @@
             <h2>Autókozmetika</h2>
             <p>Autókozmetika, ahogy az a nagykönyvben meg van írva:</p>
             <p>Az automata mosók akár súlyos anyagi károkat is okozhatnak, de a mikrokarcok elkönyvelhetők lesznek, ha begurulunk az autóval. A kézi mosók még csak-csak, de legjobb, ha profikra bízzuk, abból baj nem lehet.</p>
-            <p>Azok számára, akik járművükre nem csupán használati tárgyként, egy eszközként tekintenek, akiknek az autó egy társ, aki törődést igényel. Számotokra tudunk szolgálni:</p>
+            <p>Azok számára, akik járművükre nem csupán használati tárgyként, egy eszközként tekintenek, akiknek az autó egy társ, aki törődést igényel.</p>
             <ul class="service-list">
                 <li> <strong>Külső tisztítás</strong>         
                     <ul>
@@ -369,6 +405,8 @@
                     </ul>
                 </li>
             </ul>
+			
+			<img src="https://i.postimg.cc/C5MTnFxj/N-vtelen-2.jpg" alt="Szolgáltatások kép">
 
             <!-- Teljeskörű szervizelés -->
             <h2>Teljeskörű szervizelés</h2>
@@ -418,34 +456,51 @@
                 </li>
             </ul>
 
-            <img src="https://source.unsplash.com/800x400/?car,repair" alt="Szolgáltatások kép">
+            <img src="https://i.postimg.cc/dt1cqtXF/N-vtelen-1.jpg" alt="Szolgáltatások kép">
         </section>
 
         <!-- Álláslehetőségek -->
         <section id="careers" class="hidden">
             <h1>Álláslehetőségek</h1>
-            <p>Ha szeretne csatlakozni csapatunkhoz, nézze meg nyitott pozícióinkat! Folyamatosan keresünk lelkes és szakmailag felkészült munkatársakat.</p>
-            <ul class="job-list">
-                <li>🚗 Autószerelő (tapasztalat szükséges)</li>
-                <li>🧽 Autókozmetikus (kezdők is jelentkezhetnek)</li>
-                <li>‍💄 Takarítónő (18-25 év közötti, szőke, hosszú, selymes hajú, karcsú nő)</li>
-                <li>❓ Lehet nem is kell</li>
-            </ul>
+            <p>Ha autószerelőként vagy autókozmetikusként keresel egy olyan munkahelyet, ahol szakmai tudásodat igazán hasznosíthatod, miközben egy összetartó és támogató csapat tagja lehetsz, akkor nálunk a helyed! Csatlakozz hozzánk, és dolgozz egy dinamikus, megbízható környezetben, ahol értékeljük a szakértelmet és a lelkesedést. Ne habozz – jelentkezz most!</p>
+            
+            <div class="job-offers-container">
+                <div>
+                    <h3>Amit kínálunk:</h3>
+                    <ul>
+                        <li>✔️ Stabil hosszútávú munkalehetőség</li>
+                        <li>✔️ Modern, jól felszerelt munkakörnyezet</li>
+                        <li>✔️ Versenyképes fizetés</li>
+                        <li>✔️ Folyamatos szakmai fejlődési lehetőség</li>
+                        <li>✔️ Laza munkahelyi környezet</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Amit elvárunk:</h3>
+                    <ul>
+                        <li>⚪ Szakirányú képesítés</li>
+                        <li>⚪ Szakmai tapasztalat</li>
+                        <li>⚪ Érvényes vezetői engedély</li>
+                        <li>⚪ Problémamegoldó készség</li>
+                        <li>⚪ Precíz, alapos munkavégzés</li>
+                    </ul>
+                </div>
+            </div>
+
             <div class="apply-container">
                 <button class="apply-button" onclick="openApplyModal()">Jelentkezem</button>
             </div>
-            <img src="https://i.postimg.cc/bv7TyR1x/image-11zon.png" alt="Álláslehetőségek kép">
+            <img src="https://i.postimg.cc/J4Vx7TtQ/N-vtelen-5.jpg" alt="Álláslehetőségek kép">
         </section>
 
         <!-- Kapcsolat -->
         <section id="contact" class="hidden">
             <h1>Kapcsolat</h1>
             <p>Keressen minket bátran, csapatunk mindig szívesen áll rendelkezésére!</p>
-            <p><strong>Cím:</strong> 1234 Autószerviz utca, Los Santos</p>
-            <p><strong>Telefon:</strong> 30/459-3506</p>
-            <p><strong>E-mail:</strong> info@hayesautorepair.com</p>
-            <p><strong>Nyitvatartás:</strong> Hétfő-Péntek: Talán, Szombat: Noo</p>
-            <img src="https://i.postimg.cc/brt9SVjY/N-vtelen-terv-1.png" alt="Kapcsolat kép">
+            <p><strong>Cím:</strong> 13 South Rockford Dr, Los Santos</p>
+            <p><strong>Telefon:</strong> 941-103 / 276-727</p>
+            <p><strong>Facefinder:</strong> https://face.octans.hu/pages/hayes?ref=qs</p>
+            <img src="https://i.postimg.cc/VvvZc5NH/N-vtelen-4.jpg" alt="Kapcsolat kép">
         </section>
     </main>
 
